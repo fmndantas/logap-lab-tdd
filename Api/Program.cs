@@ -1,4 +1,5 @@
 using Persistencia;
+using Servicos;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,13 +9,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 
 var stringConexao = builder.Configuration.GetConnectionString("Default");
-Console.WriteLine($"stringConexao: {stringConexao}");
 
 builder.Services.AddDbContext<Contexto>(opcoes =>
 {
-    opcoes.UseSqlServer(stringConexao);
+    opcoes.UseSqlServer(stringConexao, b => b.MigrationsAssembly("Api"));
     opcoes.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 });
+
+builder.Services.AddScoped<IEnderecoEmailServico, EnderecoEmailServico>();
 
 var app = builder.Build();
 

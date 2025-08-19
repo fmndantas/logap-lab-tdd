@@ -17,9 +17,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Persistencia\Persistencia.csproj" />
+    <ProjectReference Include="..\Servicos\Servicos.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="TestesIntegracao"/>
+    <InternalsVisibleTo Include="TestesIntegracao" />
   </ItemGroup>
 </Project>
