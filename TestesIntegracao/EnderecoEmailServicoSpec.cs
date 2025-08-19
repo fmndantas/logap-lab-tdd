@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Persistencia;
-using Testcontainers.MsSql;
 using Servicos;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,7 +10,6 @@ public class EnderecoEmailServicoSpec : WebApplicationFactory<Program>, IClassFi
 {
     private readonly IServiceProvider _serviceProvider;
     private readonly Contexto _contexto;
-    private readonly MsSqlContainer _testContainer = null!;
 
     public EnderecoEmailServicoSpec(SqlServerFixture fixture)
     {
