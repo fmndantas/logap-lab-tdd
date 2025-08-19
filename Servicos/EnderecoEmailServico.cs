@@ -4,11 +4,12 @@ namespace Servicos;
 
 public class EnderecoEmailServico(Contexto contexto) : IEnderecoEmailServico
 {
-    public async Task<bool> CriarEnderecoEmail(string endereco, CancellationToken cancellationToken)
+    public async Task<int> CriarEnderecoEmail(string endereco, CancellationToken cancellationToken)
     {
         var set = contexto.Set<EnderecoEmail>();
-        await set.AddAsync(new EnderecoEmail { Endereco = endereco, Ativo = false });
+        var enderecoArmazenado = new EnderecoEmail { Endereco = endereco, Ativo = false };
+        await set.AddAsync(enderecoArmazenado);
         await contexto.SaveChangesAsync(cancellationToken);
-        return true;
+        return enderecoArmazenado.Id;
     }
 }

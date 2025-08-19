@@ -1,5 +1,6 @@
 using Persistencia;
 using Servicos;
+using Api.Inputs;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,25 +27,17 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-// NOTE: limpar
-// var summaries = new[]
-// {
-//     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-// };
+app.MapGet("enderecos", (Contexto contexto, CancellationToken cancellationToken) =>
+{
+    var set = contexto.Set<EnderecoEmail>();
+    return set.ToListAsync(cancellationToken);
+});
 
-// app.MapGet("/weatherforecast", () =>
-// {
-//     var forecast =  Enumerable.Range(1, 5).Select(index =>
-//         new WeatherForecast
-//         (
-//             DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-//             Random.Shared.Next(-20, 55),
-//             summaries[Random.Shared.Next(summaries.Length)]
-//         ))
-//         .ToArray();
-//     return forecast;
-// })
-// .WithName("GetWeatherForecast");
+app.MapPost("enderecos", async (IEnderecoEmailServico enderecoEmailServico, CriacaoEmail input, CancellationToken cancellationToken) =>
+{
+    var idEnderecoEmail = await enderecoEmailServico.CriarEnderecoEmail(input.Endereco, cancellationToken);
+    return Results.Created("enderecos", new { IdEnderecoEmail = idEnderecoEmail });
+});
 
 app.Run();
 

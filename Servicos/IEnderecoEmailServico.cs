@@ -2,5 +2,5 @@
 
 public interface IEnderecoEmailServico
 {
-    public Task<bool> CriarEnderecoEmail(string endereco, CancellationToken cancellationToken);
+    public Task<int> CriarEnderecoEmail(string endereco, CancellationToken cancellationToken);
 }
